@@ -12,7 +12,9 @@ Contains various configuration files for Linux programs, among which:
 ## Usage
 
 `install.sh <TARGET_DIR> <NUKE>` will create symlinks of the files/folders in the `dotfiles` folder in the `TARGET_DIR`, and will create symlinks of the files/folders in `config` in `TARGET_DIR/.config`. 
+
 >There are often more programs in the `.config` folder than you'd like to track changes for, which is why these are separate
+
 By default `TARGET_DIR` will be the `$HOME` folder. The setting is mainly there for testing.
 If you want to overwrite existing program configs and other dotfiles, this can be done by making the last argument `NUKE`. This will delete any conflicts when trying to make the symlinks.
 

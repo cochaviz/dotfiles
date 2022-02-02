@@ -8,7 +8,7 @@ TARGET_DIR=$1
 
 # if last argument set to NUKE it will remove conflicting files found in $TARGET_DIR and $TARGET_DIR/.config if
 # the latter already exists
-NUKE=${@: -1}
+NUKE="${@: -1}"
 
 # set $TARGET_DIR to default if not set
 if [[ "$TARGET_DIR" == "" ]]; then
