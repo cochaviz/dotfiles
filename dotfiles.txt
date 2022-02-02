@@ -1,5 +1,0 @@
-.zshrc
-.scripts
-.fehbg
-.latexmkrc
-.oh-my-zsh/themes/bunker.zsh-theme
