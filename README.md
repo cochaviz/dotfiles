@@ -41,3 +41,11 @@ If you've succesfully copied your own dotfiles or just want to use mine (feel fr
 ```bash
 $ "$HOME"/.dotfiles/install.sh
 ```
+
+Remember that if you want to overwrite _all_ existing dotfiles, you can also
+
+```bash
+$ "$HOME"/.dotfiles/install.sh NUKE
+```
+
+However, do so only at your own risk! 
