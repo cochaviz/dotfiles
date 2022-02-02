@@ -37,7 +37,7 @@ for file in "$SCRIPT_DIR"/dotfiles/.*; do
 
 		if [ -f "$TARGET_DIR"/"$FILENAME" ] || [ -d "$TARGET_DIR"/"$FILENAME" ]; then
 			if [[ $NUKE == "NUKE" ]]; then
-				rm -r "$TARGET_DIR"/"$FILENAME"
+				rm -r "${TARGET_DIR:?}"/"$FILENAME"
 				cecho "YELLOW" "Found and removed $FILENAME from $TARGET_DIR"
 			fi
 		fi
