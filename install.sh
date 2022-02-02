@@ -23,7 +23,7 @@ if [ ! -d "$TARGET_DIR" ]; then
 fi 
 
 # copy all dotfiles to $TARGET_DIR
-for file in "$SCRIPT_DIR"/dotfiles/.*; do
+for file in "$SCRIPT_DIR"/dotfiles/*.*; do
 	if ! [[ "${file: -1}" == "." ]] && ! [[ "${file: -1}" == ".." ]]; then
 		FILENAME=${file##*/}
 
@@ -54,7 +54,7 @@ for dir in "$SCRIPT_DIR"/config/*; do
 			echo "Found and removed $dir from .config"
 		fi
 
-		if ln -s "$dir" "$TARGET_DIR"/.config/"$DIRNAME"; then
+		if ln -s "$dir" "$TARGET_DIR"/.config/; then
 			echo "Linking $dir, to $TARGET_DIR/.config/$DIRNAME"
 		else
 			echo "Failed to link $dir to $TARGET_DIR/.config/$DIRNAME"
