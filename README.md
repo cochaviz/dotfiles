@@ -28,7 +28,7 @@ $ git clone https://www.github.com/zoharcochavi/dotfiles "$HOME"/.dotfiles
 If you want to only use you own dot- and config files, you can do the following (assuming you've cloned into `$HOME/.dotfiles`). 
 
 ```bash
-$ rm -r "$HOME"/.dotfiles/dotfiles/*.* && rm -r "$HOME"/.dotfiles/config/*
+$ rm -r "$HOME"/.dotfiles/dotfiles/.* && rm -r "$HOME"/.dotfiles/config/*
 ```
 
 Then _move_ all the required files into dotfiles and config. For example:

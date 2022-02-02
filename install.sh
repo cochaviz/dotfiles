@@ -1,5 +1,13 @@
 #!/bin/bash
 
+cecho() {
+    RED="\033[0;31m"
+    GREEN="\033[0;32m"
+    YELLOW="\033[1;33m"
+    NC="\033[0m" # No Color
+    printf "${!1}${2} ${NC}\n"
+}
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # full directory path into which dotfiles will be linked and the .config folder will reside
@@ -8,7 +16,7 @@ TARGET_DIR=$1
 
 # if last argument set to NUKE it will remove conflicting files found in $TARGET_DIR and $TARGET_DIR/.config if
 # the latter already exists
-NUKE="${@: -1}"
+NUKE=${*: -1}
 
 # set $TARGET_DIR to default if not set
 if [[ "$TARGET_DIR" == "" ]]; then
@@ -23,18 +31,21 @@ if [ ! -d "$TARGET_DIR" ]; then
 fi 
 
 # copy all dotfiles to $TARGET_DIR
-for file in "$SCRIPT_DIR"/dotfiles/*.*; do
+for file in "$SCRIPT_DIR"/dotfiles/.*; do
 	if ! [[ "${file: -1}" == "." ]] && ! [[ "${file: -1}" == ".." ]]; then
 		FILENAME=${file##*/}
 
-		if [ -d "$TARGET_DIR"/"$FILENAME" ] && [[ $NUKE == "NUKE" ]]; then
-			echo "Found and removed $file from .config"
+		if [ -f "$TARGET_DIR"/"$FILENAME" ] || [ -d "$TARGET_DIR"/"$FILENAME" ]; then
+			if [[ $NUKE == "NUKE" ]]; then
+				rm -r "$TARGET_DIR"/"$FILENAME"
+				cecho "YELLOW" "Found and removed $FILENAME from $TARGET_DIR"
+			fi
 		fi
 
-		if ln -s "$file" "$TARGET_DIR"/"$FILENAME"; then
-			echo "Linking $file, to $TARGET_DIR/$FILENAME"
+		if ln -s "$file" "$TARGET_DIR"; then
+			cecho "GREEN" "Linked $file to $TARGET_DIR/$FILENAME"
 		else
-			echo "Failed to link $file to $TARGET_DIR/$FILENAME"
+			cecho "RED" "Failed to link $file to $TARGET_DIR/$FILENAME, file exists"
 		fi
 	fi
 done
@@ -51,13 +62,15 @@ for dir in "$SCRIPT_DIR"/config/*; do
 		DIRNAME=${dir##*/}
 
 		if [ -d "$TARGET_DIR"/.config/"$DIRNAME" ] && [[ $NUKE == "NUKE" ]]; then
-			echo "Found and removed $dir from .config"
+			rm "$TARGET_DIR"/.config/"$DIRNAME"
+			cecho "YELLOW" "Found and removed $dir from $TARGET_DIR/.config"
 		fi
 
-		if ln -s "$dir" "$TARGET_DIR"/.config/; then
-			echo "Linking $dir, to $TARGET_DIR/.config/$DIRNAME"
+		if ln -sv "$dir" "$TARGET_DIR"/.config/ &> /dev/null; then
+			cecho "GREEN" "Linked $dir to $TARGET_DIR/.config/$DIRNAME"
 		else
-			echo "Failed to link $dir to $TARGET_DIR/.config/$DIRNAME"
+			cecho "RED" "Failed to link $dir to $TARGET_DIR/.config/$DIRNAME, file exists"
 		fi
 	fi
 done
+
