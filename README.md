@@ -25,7 +25,7 @@ I recommend cloning the repo into a folder called `.dotfiles` in your directory
 $ git clone https://www.github.com/zoharcochavi/dotfiles "$HOME"/.dotfiles
 ```
 
-If you want to only use you own dot- and config files, you can do the following (assuming you've cloned into `$HOME/.dotfiles`). 
+If you want to only use your own dot- and config files, you can do the following (assuming you've cloned into `$HOME/.dotfiles`). 
 
 ```bash
 $ rm -r "$HOME"/.dotfiles/dotfiles/.* && rm -r "$HOME"/.dotfiles/config/*
