@@ -10,7 +10,11 @@
            (concat
             (projectile-project-root)
             "/resources/bep.bib"))))
- '(warning-suppress-types '((after-init-hook) (after-init-hook))))
+ '(warning-suppress-types
+   '((before-save-hook)
+     (before-save-hook)
+     (after-init-hook)
+     (after-init-hook))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
