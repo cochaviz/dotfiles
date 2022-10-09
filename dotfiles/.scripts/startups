@@ -8,5 +8,5 @@ startnotrunning kitty
 startnotrunning firefox
 startnotrunning whatsapp-for-linux
 startnotrunning todoist
-startnotrunning discord
 startnotrunning webwhatsapp
+startnotrunning redshift -l 52.011578:4.357068 & # DELFT
