@@ -1,0 +1,3 @@
+function ffuf-ctf --wraps='ffuf -t 1 -p .1 -H "Cookie: ctfchallenge=eyJkYXRhIjoiZXlKMWMyVnlYMmhoYzJnaU9pSnViV0Z4ZVhCcU1DSXNJbkJ5WlcxcGRXMGlPbVpoYkhObGZRPT0iLCJ2ZXJpZnkiOiJmZTdjNDIzZmIzNjQ2NGFmNGYwMTNlNzBlNThmYzY3OSJ9"' --description 'alias ffuf-ctf=ffuf -t 1 -p .1 -H "Cookie: ctfchallenge=eyJkYXRhIjoiZXlKMWMyVnlYMmhoYzJnaU9pSnViV0Z4ZVhCcU1DSXNJbkJ5WlcxcGRXMGlPbVpoYkhObGZRPT0iLCJ2ZXJpZnkiOiJmZTdjNDIzZmIzNjQ2NGFmNGYwMTNlNzBlNThmYzY3OSJ9"'
+  ffuf -t 1 -p .1 -H "Cookie: ctfchallenge=eyJkYXRhIjoiZXlKMWMyVnlYMmhoYzJnaU9pSnViV0Z4ZVhCcU1DSXNJbkJ5WlcxcGRXMGlPbVpoYkhObGZRPT0iLCJ2ZXJpZnkiOiJmZTdjNDIzZmIzNjQ2NGFmNGYwMTNlNzBlNThmYzY3OSJ9" $argv; 
+end

@@ -5,13 +5,15 @@ SETUVAR --export EDITOR:emacsclient\x20\x2dt
 SETUVAR --export EMACSREMOTESOCKETDIR:/run/user/1000/emacs_remote/
 SETUVAR --export FZF_DEFAULT_COMMAND:ag\x20\x2d\x2dhidden\x20\x2d\x2dignore\x20\x2egit\x20\x2de
 SETUVAR --export GPG_AGENT_INFO:/run/user/1000/gnupg/S\x2egpg\x2dagent\x3a1253\x3a1
-SETUVAR --export SSH_AGENT_PID:2032
-SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXXiHHztz/agent\x2e2031
+SETUVAR --export SSH_AGENT_PID:1500
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXXUKLqQH/agent\x2e1499
 SETUVAR --export SXHKD_SHELL:sh
 SETUVAR --export VISUAL:emacsclient\x20\x2dc\x20\x2da\x20emacs
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_l:ls\x20\x2dal
 SETUVAR _fish_abbr_sudo:doas
+SETUVAR autovenv_announce:yes
+SETUVAR autovenv_enable:yes
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:c397d8
