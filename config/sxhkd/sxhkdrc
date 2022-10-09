@@ -8,10 +8,7 @@ super + {_,shift + }Return
 
 # program launcher
 super + space
-    	$HOME/.config/rofi/launchers/text/launcher.sh drun
-
-super + shift + space
-    	$HOME/.config/rofi/launchers/text/launcher.sh calc
+      rofi -show {combi}
 
 # fix tablet covering two screens
 super + shift + ctrl + t
@@ -32,7 +29,7 @@ super + shift + s
 
 # lock screen
 super + ctrl + l
-        env XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_PASSWORD_PROMPT=kaomoji xsecurelock
+        env XSECURELOCK_AUTH_FOREGROUND_COLOR=$(xrdb -get color11) XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_PASSWORD_PROMPT=kaomoji xsecurelock
 
 # silence notifications
 super + shift +  m

@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
 dual_monitor() {
-    bspc monitor $2 -n 1 -d IV V VI VII IIX IX X
-    bspc monitor $1 -n 0 -d I II III
+    bspc monitor %"$2" -n 1 -d IV V VI VII IIX IX X
+    bspc monitor %"$1" -n 0 -d I II III
 
     bspc monitor 1 -d 4 5 6 7 8 9 10
     bspc monitor 0 -d 1 2 3
 
-    bspc monitor $2 -s $1
+    bspc monitor "$2" -s "$1"
 }
 
 export PATH=~/.scripts/:"$PATH"
@@ -17,11 +17,15 @@ bspc monitor any --reset-desktops
 
 if [[ $(xrandr -q | grep -w DP-1-0) =~ \ connected ]]; then
     ~/.screenlayout/HOME.sh
-    dual_monitor "DP-1-0" "eDP1"
+    dual_monitor DP-1-0 eDP1
 
-elif [[ $(xrandr -q | grep -w HDMI-0) =~ \ connected ]]; then
+elif [[ $(xrandr -q | grep -w DP-1-0.1) =~ \ connected ]]; then
+    ~/.screenlayout/work.sh
+    dual_monitor DP-1-0.1 eDP1
+
+elif [[ $(xrandr -q | grep -w HDMI-1-0) =~ \ connected ]]; then
     ~/.screenlayout/WORK.sh
-    dual_monitor "HDMI-0" "eDP1"
+    dual_monitor eDP1 HDMI-1-0
 
 else
     ~/.screenlayout/SINGLE.sh
@@ -37,8 +41,8 @@ fi
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc config border_width         2
-bspc config focused_border_color "$(xrdb -get color11)"
-bspc config normal_border_color "#1e1e1e"
+bspc config focused_border_color "$(xrdb -get color6)"
+bspc config normal_border_color "$(xrdb -get background)"
 bspc config window_gap          15
 
 bspc config split_ratio          0.50
@@ -77,11 +81,13 @@ bspc rule -a origin.exe state=floating
 
 # Background applications
 
-exec $HOME/.config/polybar/launch_hidden.sh --forest 3 &
-exec feh --bg-fill ~/Pictures/wallpaper.jpg &
-exec $(pkill dunst; dunst -config "$HOME"/.config/dunst/dunstrc) &
+$HOME/.config/polybar/launch_hidden.sh --forest 3 &
+feh --bg-fill ~/Pictures/wallpaper.jpg &
+dunst -config "$HOME"/.config/dunst/dunstrc &
+# redshift -l 52.011578:4.357068 & # DELFT
 
 # Startup applications
 
-exec startups &
+picom -r 2 -o .7 -l 5 -t 5 -D 2 --shadow-exclude "class_g = 'Firefox' && argb" &
+startups &
 ~/.scripts/hellowikipedia.sh
