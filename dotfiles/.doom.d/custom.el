@@ -7,11 +7,20 @@
    '("5034d4b3ebd327bbdc1bbf925b6bf7e4dfbe4f3f84ee4d21e154143f128c6e04" default))
  '(safe-local-variable-values
    '((eval setq bibtex-completion-bibliography
-           (concat
-            (projectile-project-root)
-            "/resources/bep.bib"))))
+      (concat
+       (projectile-project-root)
+       "/ce-group-assignment.bib"))
+     (eval setq bibtex-completion-bibliography
+      (concat
+       (projectile-project-root)
+       "/ucs.bib"))
+     (eval setq bibtex-completion-bibliography
+      (concat
+       (projectile-project-root)
+       "/resources/bep.bib"))))
  '(warning-suppress-types
-   '((before-save-hook)
+   '((org-element-cache)
+     (before-save-hook)
      (before-save-hook)
      (after-init-hook)
      (after-init-hook))))

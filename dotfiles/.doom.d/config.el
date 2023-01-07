@@ -64,11 +64,17 @@
 
 ;; ---- PROJECTILE ----
 
-(setq projectile-project-search-path '(("~/Documents/Projects") ("~/Documents/Study/" . 4)))
+(setq projectile-project-search-path '(("~/Documents/Projects") ("~/Documents/Study/" . 5)))
 
 (defun enable-treemacs-follow-project-minor ()
   "Enables treemacs-follow-project-mode via function call"
   (setq! treemacs-project-follow-mode 1))
+
+(after! projectile
+        (projectile-register-project-type 'latex '("*.bib")
+                :project-file "*.bib"
+                :compile "latexmk -pdflatex=xelatex -shell-escape -bibtex -f -pdf %f"
+                :run "evince %f"))
 
 ;; ---- UTILS ----
 
@@ -178,7 +184,7 @@
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("appa"
-                 "\\documentclass[man]{apa7}
+                 "\\documentclass[jou]{apa7}
                   \\usepackage[american]{babel}
 
                   \\usepackage[backend=biber,style=apa]{biblatex} "
@@ -227,11 +233,29 @@
                  \\makeatother
                  \\usepackage[american]{babel}
                  \\usepackage[backend=biber, style=apa]{biblatex}"
+
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (add-to-list 'org-latex-classes
+                 '("tudelft_multicol"
+                   "\\documentclass[english]{article}
+                   \\usepackage{geometry}
+                   \\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+                   \\makeatletter
+                   \\usepackage{url}
+                   \\makeatother
+                   \\usepackage[american]{babel}
+                   \\usepackage[backend=biber, style=apa]{biblatex}
+                   \\usepackage{multicol}"
+
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (eval-after-load "org"
   '(progn
@@ -268,28 +292,18 @@
 
 ;; ---- DEVENV ----
 
-(require 'lsp-docker)
+(defvar-local my/flycheck-local-cache nil)
 
-(defvar lsp-docker-client-packages
-    '(lsp-css lsp-clients lsp-bash lsp-go lsp-pyls lsp-html lsp-typescript
-      lsp-terraform lsp-clangd))
+(defun my/flycheck-checker-get (fn checker property)
+  (or (alist-get property (alist-get checker my/flycheck-local-cache))
+      (funcall fn checker property)))
 
-(setq lsp-docker-client-configs
-    '((:server-id bash-ls :docker-server-id bashls-docker :server-command "bash-language-server start")
-      (:server-id clangd :docker-server-id clangd-docker :server-command "clangd")
-      (:server-id css-ls :docker-server-id cssls-docker :server-command "css-languageserver --stdio")
-      ;; (:server-id dockerfile-ls :docker-server-id dockerfilels-docker :server-command "docker-langserver --stdio")
-      (:server-id gopls :docker-server-id gopls-docker :server-command "gopls")
-      (:server-id html-ls :docker-server-id htmls-docker :server-command "html-languageserver --stdio")
-      (:server-id pyls :docker-server-id pyls-docker :server-command "pyls")
-      ;; (:server-id ts-ls :docker-server-id tsls-docker :server-command "typescript-language-server --stdio")
-      ))
+(advice-add 'flycheck-checker-get :around 'my/flycheck-checker-get)
 
-(require 'lsp-docker)
-(lsp-docker-init-clients
-  :path-mappings '(("path-to-projects-you-want-to-use" . "/projects"))
-  :client-packages lsp-docker-client-packages
-  :client-configs lsp-docker-client-configs)
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'python-mode)
+              (setq my/flycheck-local-cache '((lsp . ((next-checkers . (python-pylint)))))))))
 
 ;; ---- PROJECTILE ----
 
@@ -315,8 +329,8 @@
       ;; We might be running inside a virtualenv, in which case the
       ;; modules won't be available. But calling the executables
       ;; directly will work.
-      (setq-local flycheck-python-pylint-executable "pylint")
-      (setq-local flycheck-python-flake8-executable "flake8"))))
+      (setq-local flycheck-python-pylint-executable "pylint")))
+  )
 
 (setq-hook! 'python-mode-hook tab-width python-indent-offset)
 
@@ -378,6 +392,18 @@
 ;; ---- UI ----
 
 (setq doom-modeline-height 35)
+
+(after! centaur-tabs
+  :ensure t
+  :config
+   (setq centaur-tabs-style "bar"
+         centaur-tabs-set-bar 'over
+         centaur-tabs-height 35
+         centaur-tabs-set-icons t
+         centaur-tabs-gray-out-icons 'buffer)
+   (centaur-tabs-headline-match)
+(centaur-tabs-group-by-projectile-project)
+   (centaur-tabs-mode t))
 
 ;; ---- SPLASH SCREEN ----
 
