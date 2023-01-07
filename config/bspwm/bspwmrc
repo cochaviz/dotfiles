@@ -1,39 +1,27 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 dual_monitor() {
-    bspc monitor %"$2" -n 1 -d IV V VI VII IIX IX X
-    bspc monitor %"$1" -n 0 -d I II III
-
-    bspc monitor 1 -d 4 5 6 7 8 9 10
-    bspc monitor 0 -d 1 2 3
-
-    bspc monitor "$2" -s "$1"
+    bspc monitor primary -n Main -d 1 2 3
+    bspc monitor ^1 -n Second -d 4 5 6 7 8 9 10
 }
 
-export PATH=~/.scripts/:"$PATH"
-
 # Monitor setup
-bspc monitor any --reset-desktops
+bspc control --reset-desktops
 
 if [[ $(xrandr -q | grep -w DP-1-0) =~ \ connected ]]; then
+    echo "Setting up HOME mode..."
     ~/.screenlayout/HOME.sh
-    dual_monitor DP-1-0 eDP1
-
-elif [[ $(xrandr -q | grep -w DP-1-0.1) =~ \ connected ]]; then
-    ~/.screenlayout/work.sh
-    dual_monitor DP-1-0.1 eDP1
+    dual_monitor
 
 elif [[ $(xrandr -q | grep -w HDMI-1-0) =~ \ connected ]]; then
+    echo "Setting up WORK mode..."
     ~/.screenlayout/WORK.sh
-    dual_monitor eDP1 HDMI-1-0
+    dual_monitor
 
 else
+    echo "Setting up SINGLE mode..."
     ~/.screenlayout/SINGLE.sh
-
-    # Use the first monitor name we see (depends on the use of video driver)
-    bspc monitor "$(xrandr -q | grep \ connected | head -n 1 | awk '{print $1;}')" -n 1 -d I II III IV V VI VII IIX IX X
-
-    bspc monitor 1 -d 1 2 3 4 5 6 7 8 9 10
+    bspc monitor primary -n Main -d 1 2 3 4 5 6 7 8 9 10
 fi
 
 # BSPWM Specific
@@ -41,7 +29,7 @@ fi
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc config border_width         2
-bspc config focused_border_color "$(xrdb -get color6)"
+bspc config focused_border_color "$(xrdb -get color14)"
 bspc config normal_border_color "$(xrdb -get background)"
 bspc config window_gap          15
 
@@ -56,22 +44,23 @@ xsetroot -cursor_name left_ptr
 
 # One-shots
 
-bspc rule -a firefox desktop=2 --one-shot
+bspc rule -a firefox        desktop=2 --one-shot
+bspc rule -a Zotero         desktop=3 --one-shot # because pop-ups
+bspc rule -a Google-chrome  desktop=5 --one-shot
+bspc rule -a telegram       desktop=5 --one-shot
 
 # Consistent
 
-bspc rule -a notion-app desktop=1
-bspc rule -a Spotify desktop=4
-bspc rule -a Whatsapp-for-linux desktop=5
-bspc rule -a discord desktop=5
-bspc rule -a Steam desktop=8
-bspc rule -a Code desktop=3
-bspc rule -a Slack desktop=5
+bspc rule -a notion-app     desktop=1
+bspc rule -a Todoist        desktop=1
+bspc rule -a Code           desktop=3
 bspc rule -a jetbrains-idea desktop=3
-bspc rule -a Postman desktop=7
-bspc rule -a Todoist desktop=1
-bspc rule -a Mattermost desktop=5
-bspc rule -a web.whatsapp.com desktop=5
+bspc rule -a Spotify        desktop=4
+bspc rule -a discord        desktop=5
+bspc rule -a Mattermost     desktop=5
+bspc rule -a Slack          desktop=5
+bspc rule -a Postman        desktop=7
+bspc rule -a Steam          desktop=8
 
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
@@ -81,13 +70,11 @@ bspc rule -a origin.exe state=floating
 
 # Background applications
 
-$HOME/.config/polybar/launch_hidden.sh --forest 3 &
+"$HOME"/.config/polybar/launch_hidden.sh --forest 3 &
 feh --bg-fill ~/Pictures/wallpaper.jpg &
 dunst -config "$HOME"/.config/dunst/dunstrc &
-# redshift -l 52.011578:4.357068 & # DELFT
+picom -r 2 -o .7 -l 5 -t 5 -D 2 --shadow-exclude "class_g = 'Firefox' && argb" &
 
 # Startup applications
-
-picom -r 2 -o .7 -l 5 -t 5 -D 2 --shadow-exclude "class_g = 'Firefox' && argb" &
-startups &
+startups
 ~/.scripts/hellowikipedia.sh

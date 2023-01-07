@@ -8,7 +8,7 @@ super + {_,shift + }Return
 
 # program launcher
 super + space
-      rofi -show {combi}
+      rofi -show {combi} -display-combi "ʕっ•ᴥ•ʔっ :: "
 
 # fix tablet covering two screens
 super + shift + ctrl + t
@@ -29,7 +29,7 @@ super + shift + s
 
 # lock screen
 super + ctrl + l
-        env XSECURELOCK_AUTH_FOREGROUND_COLOR=$(xrdb -get color11) XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_PASSWORD_PROMPT=kaomoji xsecurelock
+        $HOME/.scripts/lock.sh
 
 # silence notifications
 super + shift +  m
@@ -57,25 +57,26 @@ XF86MonBrightnessDown
 
 
 ctrl + alt + o
-	playerctl --player=spotify play-pause
+	playerctl-wrapper.sh play-pause $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
 
 ctrl + alt + p
-	playerctl --player=spotify next
+	playerctl-wrapper.sh next $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
   
 ctrl + alt + i
-	playerctl --player=spotify previous
+	playerctl-wrapper.sh previous $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
 
 XF86AudioPlay
-	playerctl --player=spotify play-pause
+	playerctl-wrapper.sh play-pause $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
 
 XF86AudioPause
-	playerctl --player=spotify play-pause
+	playerctl-wrapper.sh play-pause $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
 
 XF86AudioNext
-	playerctl --player=spotify next
+	playerctl-wrapper.sh next $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
 
 XF86AudioPrev
-	playerctl --player=spotify previous
+	playerctl-wrapper.sh previous $(cat $HOME/.last_active_player || echo "spotify") > $HOME/.last_active_player
+
 #
 # bspwm hotkeys
 #
