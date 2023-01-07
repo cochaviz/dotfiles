@@ -1,12 +1,17 @@
 #!/bin/bash
 
 function startnotrunning() {
-	ps aux | grep $1 | head -n -2 | grep $1 || "$@" & 
+	if [ "$(pgrep -c "$1")"  -ge 1 ]; then
+		echo "Not running $1"
+	else
+		echo "Running new instance of $1"
+		"$@" & disown
+	fi
 }
 
-startnotrunning kitty 
+startnotrunning kitty btop
 startnotrunning firefox
-startnotrunning whatsapp-for-linux
 startnotrunning todoist
 startnotrunning webwhatsapp
-startnotrunning redshift -l 52.011578:4.357068 & # DELFT
+startnotrunning telegram-desktop
+startnotrunning redshift -l 52.011578:4.357068
