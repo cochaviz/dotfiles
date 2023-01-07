@@ -5,8 +5,9 @@ SETUVAR --export EDITOR:emacsclient\x20\x2dt
 SETUVAR --export EMACSREMOTESOCKETDIR:/run/user/1000/emacs_remote/
 SETUVAR --export FZF_DEFAULT_COMMAND:ag\x20\x2d\x2dhidden\x20\x2d\x2dignore\x20\x2egit\x20\x2de
 SETUVAR --export GPG_AGENT_INFO:/run/user/1000/gnupg/S\x2egpg\x2dagent\x3a1253\x3a1
-SETUVAR --export SSH_AGENT_PID:1500
-SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXXUKLqQH/agent\x2e1499
+SETUVAR --export LAST_ACTIVE_PLAYER:spotify
+SETUVAR --export SSH_AGENT_PID:3003
+SETUVAR --export SSH_AUTH_SOCK:/tmp/ssh\x2dXXXXXX5jUci5/agent\x2e3002
 SETUVAR --export SXHKD_SHELL:sh
 SETUVAR --export VISUAL:emacsclient\x20\x2dc\x20\x2da\x20emacs
 SETUVAR __fish_initialized:3400
