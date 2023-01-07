@@ -1,36 +1,45 @@
+#include "/home/zohar/.config/colorscheme"
+
 ! special
-*.foreground:   #cecece
-*.background:   #1a1a1a
-*.cursorColor:  #f5f5f3
+*.foreground:   FOREGROUND
+*.background:   BACKGROUND
+*.cursorColor:  CURSORCOLOR
 
 ! black
-*.color8:       #141414
-*.color0:       #4d4d4d
+*.color8:       COLOR8
+*.color0:       COLOR0
 
 ! red
-*.color9:       #d84417
-*.color1:       #d87354
+*.color9:       COLOR9
+*.color1:       COLOR1
 
 ! green
-*.color10:       #16a34a
-*.color2:      #53a371
+*.color10:      COLOR10
+*.color2:       COLOR2
 
 ! yellow
-*.color11:       #ca911a
-*.color3:      #ca9f44
+*.color11:      COLOR11
+*.color3:       COLOR3
 
 ! blue
-*.color12:       #1489dd
-*.color4:      #71b0dd
+*.color12:      COLOR12
+*.color4:       COLOR4
 
 ! magenta
-*.color13:       #814f92
-*.color5:      #b08dbb
+*.color13:      COLOR13
+*.color5:       COLOR5
 
 ! cyan
-*.color14:       #e6518f
-*.color6:      #e677a5
+*.color14:      COLOR14
+*.color6:       COLOR6
 
 ! white
-*.color15:       #dadada
-*.color7:      #9a9a9a
+*.color15:      COLOR15
+*.color7:       COLOR7
+
+! rofi
+! rofi.color-enabled: true
+! rofi.color-window: BACKGROUND, BACKGROUND, BACKGROUND
+! rofi.color-normal: BACKGROUND, FOREGROUND, BACKGROUND, BACKGROUND, COLOR5
+! rofi.color-active: BACKGROUND, FOREGROUND, BACKGROUND, BACKGROUND, COLOR5
+! rofi.color-urgent: BACKGROUND, FOREGROUND, BACKGROUND, BACKGROUND, COLOR5
